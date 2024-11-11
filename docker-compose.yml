@@ -5,11 +5,11 @@ services:
     image: postgres:13
     container_name: postgres_db
     environment:
-      POSTGRES_USER: your_surname
-      POSTGRES_PASSWORD: your_password
-      POSTGRES_DB: PostgreSQL_Sokolov
+      POSTGRES_USER: "your_surname"
+      POSTGRES_PASSWORD: "your_password"
+      POSTGRES_DB: "PostgreSQL_Sokolov"
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     ports:
       - "5432:5432"
     networks:
@@ -21,7 +21,8 @@ services:
     volumes:
       - .:/app
     working_dir: /app
-    command: python3 app.py
+    command: >
+      sh -c "pip install psycopg2 && python3 app.py"
     depends_on:
       - db
     networks:
